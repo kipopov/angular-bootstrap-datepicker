@@ -3324,7 +3324,7 @@ dp.directive('ngDatepicker', function() {
       element.bind('blur', function(e) {
         var currentValue;
         currentValue = element.val();
-        if (moment(currentValue).isValid() || currentValue === '') {
+        if (moment(currentValue, scope.dateOptions.format).isValid() || currentValue === '') {
           return scope.$apply(function() {
             return scope.model = e !== void 0 ? currentValue : '';
           });

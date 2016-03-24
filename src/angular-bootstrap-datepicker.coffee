@@ -30,7 +30,7 @@ dp.directive 'ngDatepicker', ->
 
     element.bind('blur', (e)->
       currentValue = element.val()
-      if moment(currentValue).isValid() or currentValue == ''
+      if moment(currentValue, scope.dateOptions.format).isValid() or currentValue == ''
         scope.$apply ->
           scope.model = if e != undefined then currentValue else ''
       else
