@@ -397,7 +397,8 @@
 			else {
 				this._events = [
 					[this.element, {
-						click: $.proxy(this.show, this)
+						click: $.proxy(this.show, this),
+						keydown: $.proxy(this.keydown, this)
 					}]
 				];
 			}
@@ -811,6 +812,7 @@
 			}, this));
 			dates = $.grep(dates, $.proxy(function(date){
 				return (
+					!this.o.allowDisabledDateValue &&
 					!this.dateWithinRange(date) ||
 					!date
 				);
@@ -906,8 +908,11 @@
 			}
 			if (this.dates.contains(date) !== -1)
 				cls.push('active');
-			if (!this.dateWithinRange(date) || this.dateIsDisabled(date)){
+			if (!this.dateWithinRange(date)){
 				cls.push('disabled');
+			}
+			if (this.dateIsDisabled(date)){
+				cls.push('disabled', 'disabled-date');
 			}
 			if ($.inArray(date.getUTCDay(), this.o.daysOfWeekHighlighted) !== -1){
 				cls.push('highlighted');
@@ -1770,6 +1775,7 @@
 	var defaults = $.fn.datepicker.defaults = {
 		assumeNearbyYear: false,
 		autoclose: false,
+    allowDisabledDateValue: true,
 		beforeShowDay: $.noop,
 		beforeShowMonth: $.noop,
 		beforeShowYear: $.noop,
@@ -2117,7 +2123,7 @@
 
 	/* DATEPICKER VERSION
 	 * =================== */
-	$.fn.datepicker.version = '1.6.0';
+	$.fn.datepicker.version = '1.7.0-dev';
 
 	/* DATEPICKER DATA-API
 	* ================== */
@@ -2341,6 +2347,60 @@
 		clear: "Clear",
 		weekStart: 1,
 		format: "dd/mm/yyyy"
+	};
+}(jQuery));
+
+/**
+ * Irish English translation for bootstrap-datepicker
+ */
+;(function($){
+	$.fn.datepicker.dates['en-IE'] = {
+		days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+		daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+		daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+		months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+		monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+		today: "Today",
+		monthsTitle: "Months",
+		clear: "Clear",
+		weekStart: 1,
+		format: "dd/mm/yyyy"
+	};
+}(jQuery));
+
+/**
+ * New Zealand English translation for bootstrap-datepicker
+ */
+;(function($){
+	$.fn.datepicker.dates['en-NZ'] = {
+		days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+		daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+		daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+		months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+		monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+		today: "Today",
+		monthsTitle: "Months",
+		clear: "Clear",
+		weekStart: 1,
+		format: "d/mm/yyyy"
+	};
+}(jQuery));
+
+/**
+ * South African English translation for bootstrap-datepicker
+ */
+;(function($){
+	$.fn.datepicker.dates['en-ZA'] = {
+		days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+		daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+		daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+		months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+		monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+		today: "Today",
+		monthsTitle: "Months",
+		clear: "Clear",
+		weekStart: 1,
+		format: "yyyy/mm/d"
 	};
 }(jQuery));
 
@@ -2700,12 +2760,16 @@
 /**
  * Cambodia (Khmer) translation for bootstrap-datepicker
  * Lytay TOUCH <lytaytouch@gmail.com>
+ *
+ * DEPRECATED: This language code 'kh' is deprecated and will be removed in 2.0.
+ * Khmer support is now in a 'km' translation file to follow the ISO language
+ * code - http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
  */
 ;(function($){
 	$.fn.datepicker.dates['kh'] = {
-		days: ["អាទិត្យ", "ចន្ទ", "អង្គារ", "ពុធ", "ព្រហស្បតិ៍", "សុក្រ", "សៅរ៍", "អាទិត្យ"],
-		daysShort: ["អា.ទិ", "ចន្ទ", "អង្គារ", "ពុធ", "ព្រ.ហ", "សុក្រ", "សៅរ៍", "អា.ទិ"],
-		daysMin: ["អា.ទិ", "ចន្ទ", "អង្គារ", "ពុធ", "ព្រ.ហ", "សុក្រ", "សៅរ៍", "អា.ទិ"],
+		days: ["អាទិត្យ", "ចន្ទ", "អង្គារ", "ពុធ", "ព្រហស្បតិ៍", "សុក្រ", "សៅរ៍"],
+		daysShort: ["អា.ទិ", "ចន្ទ", "អង្គារ", "ពុធ", "ព្រ.ហ", "សុក្រ", "សៅរ៍"],
+		daysMin: ["អា.ទិ", "ចន្ទ", "អង្គារ", "ពុធ", "ព្រ.ហ", "សុក្រ", "សៅរ៍"],
 		months: ["មករា", "កុម្ភះ", "មិនា", "មេសា", "ឧសភា", "មិថុនា", "កក្កដា", "សីហា", "កញ្ញា", "តុលា", "វិច្ឆិកា", "ធ្នូ"],
 		monthsShort: ["មករា", "កុម្ភះ", "មិនា", "មេសា", "ឧសភា", "មិថុនា", "កក្កដា", "សីហា", "កញ្ញា", "តុលា", "វិច្ឆិកា", "ធ្នូ"],
 		today: "ថ្ងៃនេះ",
@@ -2727,6 +2791,22 @@
 		today: "Бүгін",
 		weekStart: 1
 	};
+}(jQuery));
+
+/**
+ * Khmer translation for bootstrap-datepicker
+ * This is the Updated Version of: https://github.com/eternicode/bootstrap-datepicker/blob/71308d42cce9524284c50c6fac50422d1790ac0f/js/locales/bootstrap-datepicker.kh.js
+ */
+;(function($){
+  $.fn.datepicker.dates['km'] = {
+    days: ["អាទិត្យ", "ចន្ទ", "អង្គារ", "ពុធ", "ព្រហស្បតិ៍", "សុក្រ", "សៅរ៍"],
+    daysShort: ["អា.ទិ", "ចន្ទ", "អង្គារ", "ពុធ", "ព្រ.ហ", "សុក្រ", "សៅរ៍"],
+    daysMin: ["អា.ទិ", "ចន្ទ", "អង្គារ", "ពុធ", "ព្រ.ហ", "សុក្រ", "សៅរ៍"],
+    months: ["មករា", "កុម្ភះ", "មិនា", "មេសា", "ឧសភា", "មិថុនា", "កក្កដា", "សីហា", "កញ្ញា", "តុលា", "វិច្ឆិកា", "ធ្នូ"],
+    monthsShort: ["មករា", "កុម្ភះ", "មិនា", "មេសា", "ឧសភា", "មិថុនា", "កក្កដា", "សីហា", "កញ្ញា", "តុលា", "វិច្ឆិកា", "ធ្នូ"],
+    today: "ថ្ងៃនេះ",
+    clear: "សំអាត"
+  };
 }(jQuery));
 
 /**
@@ -3324,7 +3404,7 @@ dp.directive('ngDatepicker', function() {
       element.bind('blur', function(e) {
         var currentValue;
         currentValue = element.val();
-        if (moment(currentValue).isValid() || currentValue === '') {
+        if (moment(currentValue, scope.dateOptions.format).isValid() || currentValue === '') {
           return scope.$apply(function() {
             return scope.model = e !== void 0 ? currentValue : '';
           });
